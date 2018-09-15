@@ -28,6 +28,7 @@ class User extends Component {
   }
 
   componentWillMount() {
+    console.log('this.props.location.state.email',this.props.location.state.email);
     axios.get(
       'https://api.spotify.com/v1/me/playlists',
       {
