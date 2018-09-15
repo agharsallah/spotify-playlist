@@ -7,11 +7,17 @@ const cookieParser = require('cookie-parser');
 const path         = require('path');
 const logger       = require('morgan');
 const routes       = require('./routes');
+const mongoose = require('mongoose');
+var cors     = require('cors');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/spotify'); // connect to database
 
 const port = process.env.PORT || 3000;
 
 // configure the express server
 const app = express();
+app.use(cors());
 
 // if we're developing, use webpack middleware for module hot reloading
 if (process.env.NODE_ENV !== 'production') {
