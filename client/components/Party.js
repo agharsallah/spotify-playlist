@@ -52,11 +52,11 @@ class Party extends Component {
 
   }
 
-  selectParty(accessToken, refreshToken, email) {
+  selectParty(accessToken, refreshToken, party_id) {
     //window.location = "/libraries/:accessToken/:refreshToken";
     this.props.history.push({
       pathname: `/libraries/${accessToken}/${refreshToken}`,
-      state: {email: email,accessToken:accessToken,refreshToken:refreshToken} 
+      state: { party_id,accessToken,refreshToken} 
       
     });
   }
@@ -90,6 +90,7 @@ class Party extends Component {
                   <div onClick={this.playParty}>|></div>
                   <div onClick={() => this.selectParty(accessToken, refreshToken, email)}>+</div>
                 </div>
+
               </div>)
             }, this)}
             <div className="newParty">
