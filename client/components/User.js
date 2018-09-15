@@ -44,7 +44,9 @@ class User extends Component {
       );
   }
 
-
+  handleClick(){
+    console.log('testtttt');
+  }
   /** Render the user's info */
   render() {
     const { accessToken, refreshToken, user } = this.props;
@@ -60,7 +62,7 @@ class User extends Component {
         <div className="user-content">
           <ul>
             {this.state.playlists.map(function (object, i) {
-              return <li key={i}>{object.name}</li>
+              return <li onClick={this.handleClick.bind(this)} key={i}>{object.name}</li>
             })}
           </ul>
           {/* <img src={imageUrl} />

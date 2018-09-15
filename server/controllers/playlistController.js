@@ -1,7 +1,7 @@
 const Playlist = require('../model/playlist');
 
 
-export const postPlaylist = (req, res, next) => {
+exports.postPlaylist = function(req, res, 	) {
 	var playlist = new Playlist();		// create a new instance of the Bear model
 	playlist.name = req.body.name;  // set the bears name (comes from the request)
 

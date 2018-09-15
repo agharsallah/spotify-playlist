@@ -1,8 +1,8 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
-var PlaylistSchema   = new Schema({
-	name: { type: String, required: true, index: { unique: true } },
-});
+
+const PlaylistSchema = Schema({name: String});
+
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);
