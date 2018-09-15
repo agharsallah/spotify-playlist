@@ -15,6 +15,7 @@ class Party extends Component {
     super(props);
     this.state = { parties: [] }
     //this.selectPlaylist = this.selectPlaylist.bind(this);
+    this.playParty = this.playParty.bind(this);
   }
   /** When we mount, get the tokens from react-router and initiate loading the info */
   componentDidMount() {
@@ -60,6 +61,11 @@ class Party extends Component {
     });
   }
 
+  playParty() {
+    
+    this.props.history.push('/play');
+  }
+
 
   /** Render the user's info */
   render() {
@@ -78,11 +84,18 @@ class Party extends Component {
         <div className="parties">
           <ul>
             {this.state.parties.map(function (object, i) {
+              return (<div  key={i}>
+                <div>{object.name}</div>
+                <div className="party-buttons">
+                  <div onClick={this.playParty}>|></div>
+                  <div onClick={() => this.selectParty(accessToken, refreshToken, email)}>+</div>
+                </div>
 
-              return (<div onClick={() => this.selectParty(accessToken, refreshToken, object._id)} key={i}>
-                {object.name}
               </div>)
             }, this)}
+            <div className="newParty">
+              + New Party
+            </div>
           </ul>
         </div>
       </div>
