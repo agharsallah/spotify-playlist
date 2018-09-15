@@ -23,11 +23,11 @@ class Party extends Component {
     const { accessToken, refreshToken } = params;
     dispatch(setTokens({ accessToken, refreshToken }));
     dispatch(getMyInfo());
-    
+
   }
 
   componentWillMount() {
-    
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,25 +35,29 @@ class Party extends Component {
     //console.log(this.props);
     if (nextProps.user.email) {
       axios.get(
-          `http://localhost:3000/parties/${nextProps.user.email}`,
-          {
-          }
-        )
-          .then((response) => {
-            var response = response.data;
-            this.setState({ parties: response });
-          },
-            (error) => {
-              var status = error.response.status
-            }
-          );
+        `http://localhost:3000/parties/${nextProps.user.email}`,
+        {
         }
-    
+      )
+        .then((response) => {
+          var response = response.data;
+          this.setState({ parties: response });
+        },
+          (error) => {
+            var status = error.response.status
+          }
+        );
+    }
+
   }
 
   selectParty(accessToken, refreshToken, email) {
     //window.location = "/libraries/:accessToken/:refreshToken";
-    this.props.history.push(`/libraries/${accessToken}/${refreshToken}/${email}`);
+    this.props.history.push({
+      pathname: `/libraries/${accessToken}/${refreshToken}`,
+      state: {email: email,accessToken:accessToken,refreshToken:refreshToken} 
+      
+    });
   }
 
 
@@ -62,11 +66,11 @@ class Party extends Component {
     const { accessToken, refreshToken, user } = this.props;
     const { loading, display_name, images, id, email, external_urls, href, country, product } = user;
     const imageUrl = images[0] ? images[0].url : "";
-    
+
     // if we're still loading, indicate such
     if (loading) {
       return <h2>Loading...</h2>;
-    } 
+    }
     return (
       <div className="user">
         <h2>{`Logged in as ${display_name}`}</h2>
@@ -74,7 +78,7 @@ class Party extends Component {
         <div className="parties">
           <ul>
             {this.state.parties.map(function (object, i) {
-              
+
               return (<div onClick={() => this.selectParty(accessToken, refreshToken, email)} key={i}>
                 {object.name}
               </div>)
