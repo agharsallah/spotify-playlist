@@ -8,7 +8,7 @@ var request = require('request');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/spotify'); // connect to database
+mongoose.connect('mongodb://test:hackthenorth18@ds257732.mlab.com:57732/spotify-playlist'); // connect to database
 
 // configure the express server
 const CLIENT_ID = '058622cd5fbc48f0be5988bc66af696f';

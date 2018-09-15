@@ -58,14 +58,17 @@ class User extends Component {
     )
       .then((response) => {
         var response = response.data;
-        console.log('----------TRRRRAAACKS----', response);
-        this.setState({ tracks: response });
+        console.log('----------TRRRRAAACKS----', response.items);
+        this.setState({ tracks: response.items.track});
+        //save the tracks in the db
+
       },
         (error) => {
           var status = error.response.status
         }
       );
-    //save the tracks in the db
+    
+
 
   }
 
