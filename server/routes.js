@@ -6,6 +6,7 @@ const express = require('express');
 const router = new express.Router();
 var request = require('request');
 const mongoose = require('mongoose');
+const Party = require('./model/party');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://test:hackthenorth18@ds257732.mlab.com:57732/spotify-playlist'); // connect to database
@@ -38,6 +39,15 @@ router.get('/login', (_, res) => {
   res.cookie(STATE_KEY, state);
   res.redirect(spotifyApi.createAuthorizeURL(scopes, state));
 });
+
+router.get('/parties/:userId', function(req, res, next) {
+  Party.find({members: req.params.userId}, (err, partyDocs) => {
+    console.log(req.params.userId);
+    res.json(partyDocs);
+  });
+});
+
+
 
 /**
  * The /callback endpoint - hit after the user logs in to spotifyApi

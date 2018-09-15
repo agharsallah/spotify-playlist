@@ -8,6 +8,7 @@ const path         = require('path');
 const logger       = require('morgan');
 const routes       = require('./routes');
 const Playlist = require('./model/playlist');
+const Party = require('./model/party');
 var cors     = require('cors');
 
 const port = process.env.PORT || 3000;
@@ -52,6 +53,7 @@ app.use(logger('dev'))
       res.json({ message: 'playlist added!' });
     });
   });
+
 // Start her up, boys
 app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));
