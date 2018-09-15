@@ -54,7 +54,7 @@ a {
     img {
       width: 60%;
     }
-    img, p {
+    img, > p {
       padding-bottom: 30px;
     }
     .login-btn .spotify-btn {
@@ -78,6 +78,7 @@ a {
       display: flex;
       align-items: center;
       margin-top: 50px;
+      margin-bottom: 50px;
       img {
         width: 200px;
         height: 200px;
@@ -89,11 +90,11 @@ a {
         grid-gap: 10px;
         div {
           padding: 3px 0px;
-          height: 100px;
+          height: auto;
           background-color: @spotify-green;
           border-radius: 5px;
           text-align: center;
-          line-height: 100px;
+          padding-top: 30px;
           color: white;
           /*span:first-child {
             width: 150px;
