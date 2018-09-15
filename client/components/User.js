@@ -22,7 +22,6 @@ class User extends Component {
     // params injected via react-router, dispatch injected via connect
     const { dispatch, params } = this.props;
     const { accessToken, refreshToken } = params;
-    console.log(accessToken);
     dispatch(setTokens({ accessToken, refreshToken }));
     dispatch(getMyInfo());
   }
@@ -51,8 +50,10 @@ class User extends Component {
     console.log(this.props);
   }
 
-  selectPlaylist(id, email) {
-    console.log("add playlist", id);
+  selectPlaylist(id, email,accessToken) {
+    //console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa',accessToken);
+    //console.log("add playlist", id);
+    
     //get the tracks of the song
     /*  axios.get(
        `https://api.spotify.com/v1/playlists/${id}/tracks`,
@@ -86,8 +87,12 @@ class User extends Component {
       });
     //after saving redirect user to the play
     //browserHistory.push('/');
-    this.props.history.pushState(null, '/play');
-
+    //this.props.history.pushState(null, '/play');
+    this.props.history.push({
+      pathname: `/play`,
+      state: { party_id:this.state.party_id,playlistId:id,userEmail: email,accessToken} 
+      
+    });
 
   }
 
@@ -108,7 +113,7 @@ class User extends Component {
           <ul>
             {this.state.playlists.map(function (object, i) {
               console.log('ddddddddddd', user);
-              return (<div onClick={this.selectPlaylist.bind(this, object.id, user.email)} key={i}>
+              return (<div onClick={this.selectPlaylist.bind(this, object.id, user.email,accessToken)} key={i}>
                 <img src={object.images[0].url}></img>
                 <p>{object.name}</p>
               </div>)
