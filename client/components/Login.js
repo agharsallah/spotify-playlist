@@ -9,7 +9,10 @@ export default class Login extends Component {
   render() {
     return (
       <div className="login">
-        <h2>Here's our login page!</h2>
+        <img src="arrows.png" alt=""/>
+        <p>GroupMusic identifies common aspects of Spotify playlists accross multiple accounts and generates a new
+          aggregate playlist that all contributers are likely to enjoy. Log in below to get started.
+        </p>
         <a href="/login" dangerouslySetInnerHTML={{__html: loginSVG}}></a>
       </div>
     );

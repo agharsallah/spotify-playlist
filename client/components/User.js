@@ -14,6 +14,7 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = { playlists: [] }
+    this.selectPlaylist = this.selectPlaylist.bind(this);
   }
   /** When we mount, get the tokens from react-router and initiate loading the info */
   componentDidMount() {
@@ -44,9 +45,10 @@ class User extends Component {
       );
   }
 
-  handleClick(){
-    console.log('testtttt');
+  selectPlaylist() {
+    console.log("add playlist");
   }
+
   /** Render the user's info */
   render() {
     const { accessToken, refreshToken, user } = this.props;
@@ -58,12 +60,14 @@ class User extends Component {
     }
     return (
       <div className="user">
-        <h2>{`Logged in as ${id}`}</h2>
+        <h2>{`Logged in as ${display_name}`}</h2>
+        <p>Select the Spotify playlist you wish to contribute.</p>
         <div className="user-content">
           <ul>
             {this.state.playlists.map(function (object, i) {
-              return <li onClick={this.handleClick.bind(this)} key={i}>{object.name}</li>
-            })}
+              return <div onClick={this.selectPlaylist} key={i}>{object.name}</div>
+            }, this)}
+
           </ul>
           {/* <img src={imageUrl} />
            <ul>
