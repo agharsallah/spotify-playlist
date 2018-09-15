@@ -45,7 +45,9 @@ app.use(logger('dev'))
   app.post('/playlist', function(req, res,next) {
     var playlist = new Playlist();
     console.log('playlist--------------------',playlist);		// create a new instance of the Bear model
-    playlist.name = req.body.name;  // set the bears name (comes from the request)
+    playlist.playlistId = req.body.playlistId;  // set the bears name (comes from the request)
+    playlist.partyId = req.body.partyId;  // set the bears name (comes from the request)
+    playlist.userEmail = req.body.userEmail;  // set the bears name (comes from the request)
   
     playlist.save(function (err) {
       if (err) { return next(err); }

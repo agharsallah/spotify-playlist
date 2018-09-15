@@ -10,6 +10,7 @@ import reducer from './reducers';
 import App     from './components/App';
 import Login   from './components/Login';
 import Party   from './components/Party';
+import Play    from './components/Play';
 import Error   from './components/Error';
 import User    from './components/User';
 
@@ -35,7 +36,10 @@ class Root extends Component {
             <Route path="/user/:accessToken/:refreshToken" component={Party} />
             <Route path="/libraries/:accessToken/:refreshToken/:email" component={User} />
             <Route path="/error/:errorMsg" component={Error} />
-          </Route>
+            <Route  path="/play" component={Play} />
+
+            </Route>
+
         </Router>
       </Provider>
     );

@@ -1,8 +1,11 @@
-var mongoose     = require('mongoose');
-var Schema       = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
+const PlaylistSchema = Schema({
+	playlistId: String,
+	partyId: String,
+	userEmail:String
 
-const PlaylistSchema = Schema({name: String});
-
+});
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);
