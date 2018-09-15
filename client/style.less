@@ -1,5 +1,6 @@
-@accent-color: #000;
+@accent-color: #1db954;
 @error-color: #FB654A;
+@spotify-green: #1db954;
 @secondary-text-color: #c1c1c1;
 
 // get the page ready
@@ -35,19 +36,30 @@ a {
     color: #fff;
     padding: 20px 50px;
   }
+  display: flex;
+  flex-direction: column;
   .page-content {
     padding: 10px 50px 50px 50px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
   }
   .login {
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
     text-align: center;
+    width: 50%;
+    max-width: 300px;
+    img {
+      width: 60%;
+    }
+    img, p {
+      padding-bottom: 30px;
+    }
     .login-btn .spotify-btn {
       .main {
-        fill: @accent-color;
+        fill: @spotify-green;
       }
       &:hover .main {
         fill: black;
@@ -59,25 +71,38 @@ a {
     &, h2 { font-weight: bold; }
   }
   .user {
+    width: 100%;
+    justify-self: flex-start;
+    padding-top: 30px;
     .user-content {
       display: flex;
       align-items: center;
+      margin-top: 50px;
       img {
         width: 200px;
         height: 200px;
       }
       ul {
-        li {
-          display: flex;
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        display: grid;
+        grid-gap: 10px;
+        div {
           padding: 3px 0px;
-          span:first-child {
+          height: 100px;
+          background-color: @spotify-green;
+          border-radius: 5px;
+          text-align: center;
+          line-height: 100px;
+          color: white;
+          /*span:first-child {
             width: 150px;
             text-align: right;
             margin-right: 20px;
           }
           span:last-child {
             flex: 1;
-          }
+          }*/
         }
       }
     }
