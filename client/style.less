@@ -74,6 +74,25 @@ a {
     width: 100%;
     justify-self: flex-start;
     padding-top: 30px;
+    .parties {
+      
+      ul {
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        display: grid;
+        grid-gap: 10px;
+        div {
+
+          padding: 3px 0px;
+          min-height: 100px;
+          line-height: 100px;
+          color: white;
+          background-color: @spotify-green;
+          border-radius: 5px;
+          text-align: center;
+        }
+      }
+    }
     .user-content {
       display: flex;
       align-items: center;

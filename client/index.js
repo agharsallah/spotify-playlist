@@ -9,9 +9,10 @@ import { createHistory } from 'history';
 import reducer from './reducers';
 import App     from './components/App';
 import Login   from './components/Login';
-import User    from './components/User';
+import Party   from './components/Party';
 import Play    from './components/Play';
 import Error   from './components/Error';
+import User    from './components/User';
 
 // load our css. there probably is a better way to do this
 // but for now this is our move
@@ -32,7 +33,8 @@ class Root extends Component {
         <Router history={hashHistory}>
           <Route path="/" component={App}>
             <IndexRoute component={Login} />
-            <Route path="/user/:accessToken/:refreshToken" component={User} />
+            <Route path="/user/:accessToken/:refreshToken" component={Party} />
+            <Route path="/libraries/:accessToken/:refreshToken/:email" component={User} />
             <Route path="/error/:errorMsg" component={Error} />
             <Route  path="/play" component={Play} />
 
