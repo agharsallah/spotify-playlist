@@ -75,13 +75,22 @@ a {
     justify-self: flex-start;
     padding-top: 30px;
     .parties {
-      
+      .newParty {
+        padding: 3px 0px;
+          min-height: 100px;
+          line-height: 100px;
+          color: white;
+          background-color: @error-color;
+          border-radius: 5px;
+          text-align: center;
+      }
+
       ul {
         width: 100%;
         grid-template-columns: repeat(3, 1fr);
         display: grid;
         grid-gap: 10px;
-        div {
+        > div:nth-child(1) {
 
           padding: 3px 0px;
           min-height: 100px;
@@ -90,6 +99,22 @@ a {
           background-color: @spotify-green;
           border-radius: 5px;
           text-align: center;
+        }
+        .party-buttons {
+          display: flex;
+          flex-direction: row;
+        }
+
+        .party-buttons div {
+          flex-grow: 1;
+          text-align: center;
+          height: 50px;
+          line-height: 50px;
+          border-top: 1px solid rgba(255, 255, 255, 0.5);
+          cursor: pointer;
+          :nth-child(1) {
+            border-right: 1px solid white;
+          }
         }
       }
     }
