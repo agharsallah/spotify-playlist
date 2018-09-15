@@ -7,11 +7,15 @@ const cookieParser = require('cookie-parser');
 const path         = require('path');
 const logger       = require('morgan');
 const routes       = require('./routes');
+const Playlist = require('./model/playlist');
+var cors     = require('cors');
 
 const port = process.env.PORT || 3000;
 
 // configure the express server
 const app = express();
+
+app.use(cors());
 
 // if we're developing, use webpack middleware for module hot reloading
 if (process.env.NODE_ENV !== 'production') {
@@ -37,6 +41,17 @@ app.use(logger('dev'))
   .use(express.static(path.resolve(__dirname, '../public')))
   .use('/', routes);
 
+  app.post('/playlist', function(req, res,next) {
+    var playlist = new Playlist();
+    console.log('playlist--------------------',playlist);		// create a new instance of the Bear model
+    playlist.name = req.body.name;  // set the bears name (comes from the request)
+  
+    playlist.save(function (err) {
+      if (err) { return next(err); }
+  
+      res.json({ message: 'playlist added!' });
+    });
+  });
 // Start her up, boys
 app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));

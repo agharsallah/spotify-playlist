@@ -36,6 +36,9 @@
     "body-parser": "^1.14.2",
     "clone": "^1.0.2",
     "cookie-parser": "^1.4.1",
+    "cors": "^2.8.4",
+    "eslint": "^1.10.3",
+
     "eslint-config-airbnb": "^1.0.2",
     "eslint-plugin-react": "^3.16.1",
     "express": "^4.13.4",

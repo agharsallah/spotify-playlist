@@ -49,7 +49,6 @@ class User extends Component {
     console.log("add playlist");
   }
 
-
   /** Render the user's info */
   render() {
     const { accessToken, refreshToken, user } = this.props;
@@ -68,6 +67,7 @@ class User extends Component {
             {this.state.playlists.map(function (object, i) {
               return <div onClick={this.selectPlaylist} key={i}>{object.name}</div>
             }, this)}
+
           </ul>
           {/* <img src={imageUrl} />
            <ul>

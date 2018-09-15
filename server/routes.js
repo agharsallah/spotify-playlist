@@ -5,6 +5,10 @@ const querystring = require('querystring');
 const express = require('express');
 const router = new express.Router();
 var request = require('request');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/spotify'); // connect to database
 
 // configure the express server
 const CLIENT_ID = '058622cd5fbc48f0be5988bc66af696f';
@@ -63,20 +67,6 @@ router.get('/callback', (req, res) => {
         console.log(body);
       });
 
-/*       console.log('-------------------',data.body);
-      spotifyApi.getPlaylistTracks('agharsallah', access_token, {
-        offset: 1,
-        limit: 5,
-        fields: 'items'
-      })
-        .then(
-          function (data) {
-            console.log('The playlist contains these tracks', data.body);
-          },
-          function (err) {
-            console.log('Something went wrong!', err);
-          }
-        ); */
 
 
       // we can also pass the token to the browser to make requests from there
