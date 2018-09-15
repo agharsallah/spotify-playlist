@@ -23,24 +23,31 @@ class Party extends Component {
     const { accessToken, refreshToken } = params;
     dispatch(setTokens({ accessToken, refreshToken }));
     dispatch(getMyInfo());
-    //console.log(this.props);
-    axios.get(
-        `http://localhost:3000/parties/nuri.amari99@gmail.com`,
-        {
-        }
-      )
-        .then((response) => {
-          var response = response.data;
-          console.log('--------------', response);
-          this.setState({ parties: response });
-        },
-          (error) => {
-            var status = error.response.status
-          }
-        );
+    
   }
 
   componentWillMount() {
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    //console.log(this.props);
+    if (nextProps.user.email) {
+      axios.get(
+          `http://localhost:3000/parties/${nextProps.user.email}`,
+          {
+          }
+        )
+          .then((response) => {
+            var response = response.data;
+            this.setState({ parties: response });
+          },
+            (error) => {
+              var status = error.response.status
+            }
+          );
+        }
     
   }
 
@@ -60,7 +67,6 @@ class Party extends Component {
     if (loading) {
       return <h2>Loading...</h2>;
     } 
-    console.log(this.state);
     return (
       <div className="user">
         <h2>{`Logged in as ${display_name}`}</h2>
@@ -68,8 +74,8 @@ class Party extends Component {
         <div className="parties">
           <ul>
             {this.state.parties.map(function (object, i) {
-              console.log(object);
-              return (<div onClick={() => this.selectParty(accessToken, refreshToken, email).bind(this, object.id)} key={i}>
+              
+              return (<div onClick={() => this.selectParty(accessToken, refreshToken, email)} key={i}>
                 {object.name}
               </div>)
             }, this)}
