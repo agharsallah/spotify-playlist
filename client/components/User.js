@@ -14,7 +14,7 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = { playlists: [] }
-    this.selectPlaylist = this.selectPlaylist.bind(this);
+    //this.selectPlaylist = this.selectPlaylist.bind(this);
   }
   /** When we mount, get the tokens from react-router and initiate loading the info */
   componentDidMount() {
@@ -45,8 +45,28 @@ class User extends Component {
       );
   }
 
-  selectPlaylist() {
-    console.log("add playlist");
+  selectPlaylist(id) {
+    console.log("add playlist", id);
+    //get the tracks of the song
+    axios.get(
+      `https://api.spotify.com/v1/playlists/${id}/tracks`,
+      {
+        headers: {
+          "Authorization": `Bearer ${this.props.params.accessToken}`
+        }
+      }
+    )
+      .then((response) => {
+        var response = response.data;
+        console.log('----------TRRRRAAACKS----', response);
+        this.setState({ tracks: response });
+      },
+        (error) => {
+          var status = error.response.status
+        }
+      );
+    //save the tracks in the db
+
   }
 
   /** Render the user's info */
@@ -65,7 +85,7 @@ class User extends Component {
         <div className="user-content">
           <ul>
             {this.state.playlists.map(function (object, i) {
-              return <div onClick={this.selectPlaylist} key={i}>{object.name}</div>
+              return <div onClick={this.selectPlaylist.bind(this, object.id)} key={i}>{object.name}</div>
             }, this)}
 
           </ul>
