@@ -88,7 +88,11 @@ class User extends Component {
         <div className="user-content">
           <ul>
             {this.state.playlists.map(function (object, i) {
-              return <div onClick={this.selectPlaylist.bind(this, object.id)} key={i}>{object.name}</div>
+              console.log(object);
+              return (<div onClick={this.selectPlaylist.bind(this, object.id)} key={i}>
+                <img src={object.images[0].url}></img>
+                <p>{object.name}</p>
+              </div>)
             }, this)}
 
           </ul>
