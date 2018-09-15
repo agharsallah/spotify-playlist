@@ -5,7 +5,7 @@ import {
   getMyInfo,
   setTokens,
 } from '../actions/actions';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 
 /**
  * Our user page
@@ -14,7 +14,7 @@ import {browserHistory} from 'react-router';
 class User extends Component {
   constructor(props) {
     super(props);
-    this.state = { playlists: [] }
+    this.state = { playlists: [], party_id: '' }
     //this.selectPlaylist = this.selectPlaylist.bind(this);
   }
   /** When we mount, get the tokens from react-router and initiate loading the info */
@@ -28,7 +28,9 @@ class User extends Component {
   }
 
   componentWillMount() {
-    console.log('this.props.location.state.email',this.props.location.state.email);
+    this.setState({
+      party_id: this.props.location.state.party_id
+    });
     axios.get(
       'https://api.spotify.com/v1/me/playlists',
       {
@@ -73,7 +75,7 @@ class User extends Component {
     //save the tracks in the db - should save *
     axios.post('/playlist', {
       playlistId: id,
-      partyId: 'get from previous',
+      partyId: this.state.party_id,
       userEmail: email
     })
       .then(function (response) {
