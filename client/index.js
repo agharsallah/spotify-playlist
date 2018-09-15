@@ -10,6 +10,7 @@ import reducer from './reducers';
 import App     from './components/App';
 import Login   from './components/Login';
 import User    from './components/User';
+import Play    from './components/Play';
 import Error   from './components/Error';
 
 // load our css. there probably is a better way to do this
@@ -33,7 +34,10 @@ class Root extends Component {
             <IndexRoute component={Login} />
             <Route path="/user/:accessToken/:refreshToken" component={User} />
             <Route path="/error/:errorMsg" component={Error} />
-          </Route>
+            <Route  path="/play" component={Play} />
+
+            </Route>
+
         </Router>
       </Provider>
     );
