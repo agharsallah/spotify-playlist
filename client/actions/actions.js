@@ -15,6 +15,10 @@ export function setTokens({accessToken, refreshToken}) {
   return { type: SPOTIFY_TOKENS, accessToken, refreshToken };
 }
 
+export function createPlaylist(options) {
+  spotifyApi.createPlaylist(options);
+}
+
 /* get the user's info from the /me api */
 export function getMyInfo() {
   return dispatch => {

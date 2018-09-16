@@ -32,7 +32,7 @@ class Party extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    
     //console.log(this.props);
     if (nextProps.user.email) {
       axios.get(
@@ -52,18 +52,22 @@ class Party extends Component {
 
   }
 
-  selectParty(accessToken, refreshToken, party_id) {
-    //window.location = "/libraries/:accessToken/:refreshToken";
+  selectParty(accessToken, refreshToken, email, party_id) {
+    
     this.props.history.push({
       pathname: `/libraries/${accessToken}/${refreshToken}`,
-      state: { party_id,accessToken,refreshToken} 
-      
+      state: { party_id,accessToken,refreshToken},
     });
   }
 
-  playParty() {
+  playParty(partyId) {
     
-    this.props.history.push('/play');
+    this.props.history.push({pathname: `/play`, state: { party_id:partyId,userEmail: email,accessToken} });
+  }
+
+  createParty(email) {
+    console.log(email);
+    axios.post(`http://localhost:3000/createParty`, {email: email});
   }
 
 
@@ -84,16 +88,17 @@ class Party extends Component {
         <div className="parties">
           <ul>
             {this.state.parties.map(function (object, i) {
+            
               return (<div  key={i}>
                 <div>{object.name}</div>
                 <div className="party-buttons">
-                  <div onClick={this.playParty}>|></div>
-                  <div onClick={() => this.selectParty(accessToken, refreshToken, email)}>+</div>
+                  <div onClick={() => this.playParty(partyId)}>|></div>
+                  <div onClick={() => this.selectParty(accessToken, refreshToken, email, object._id)}>+</div>
                 </div>
 
               </div>)
             }, this)}
-            <div className="newParty">
+            <div onClick={() => this.createParty(email)} className="newParty">
               + New Party
             </div>
           </ul>

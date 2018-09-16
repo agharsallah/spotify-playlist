@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const PlaylistSchema = Schema({
-	playlistId: String,
+	playlists: [String],
 	partyId: String,
 	userEmail:String
 
