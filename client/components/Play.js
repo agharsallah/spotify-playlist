@@ -50,9 +50,9 @@ class User extends Component {
                     }
                 ).then((track) => {
                     for (var i = 0; i < track.data.items.length; i++) {
-                        if (i < 50) {
+                        //if (i < 100) {
                             trackSet.push(track.data.items[i].track.uri);
-                        }
+                        //}
                     }
 
 
@@ -104,13 +104,13 @@ class User extends Component {
                     console.log(trackSet, matched_tracks);
 
                     //this.setState({matched_tracks});
-                    console.log('rr', run);
+                   // console.log('rr', run);
 
                     if (!run) {
 
                         run = true;
                         console.log("MAKING A PLAYLIST");
-                        console.log(accessToken, '---', this.props.user.id, '---', matched_tracks);
+                        //console.log(accessToken, '---', this.props.user.id, '---', matched_tracks);
                         axios.post(`https://api.spotify.com/v1/users/${this.props.user.id}/playlists`, {
                             name: `Temporary GroupMusic Template ${this.state.partyId}`,
                         }, {
@@ -119,6 +119,8 @@ class User extends Component {
                                     "Content-Type": "application/json",
                                 }
                             }, ).then((response) => {
+                                //console.log('NEEED the play list iddd11111111',response);
+                                window.open(response.data.external_urls.spotify, '_blank');
                                 axios.post(`https://api.spotify.com/v1/playlists/${response.data.id}/tracks`, {
                                     uris: matched_tracks,
                                 }, {
@@ -126,7 +128,7 @@ class User extends Component {
                                             "Authorization": `Bearer ${accessToken}`,
                                             "Content-Type": "application/json",
                                         }
-                                    }).then((response) => { });
+                                    }).then((response) => { console.log('NEEED the play list iddd',response);});
 
                             }).catch((error) => { throw error });
                         //createPlaylist({"name": "Temporary GroupMusic Template"});
