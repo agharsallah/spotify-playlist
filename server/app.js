@@ -9,7 +9,9 @@ const logger       = require('morgan');
 const routes       = require('./routes');
 const Playlist = require('./model/playlist');
 const Party = require('./model/party');
-var cors     = require('cors');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://admin:admin123@ds139919.mlab.com:39919/spotify-playlist'); // connect to database
+var cors = require('cors');
 
 const port = process.env.PORT || 3000;
 
@@ -43,17 +45,26 @@ app.use(logger('dev'))
   .use('/', routes);
 
   app.post('/playlist', function(req, res,next) {
-    var playlist = new Playlist();
-    console.log('playlist--------------------',playlist);		// create a new instance of the Bear model
-    playlist.playlistId = req.body.playlistId;  // set the bears name (comes from the request)
-    playlist.partyId = req.body.partyId;  // set the bears name (comes from the request)
-    playlist.userEmail = req.body.userEmail;  // set the bears name (comes from the request)
-  
-    playlist.save(function (err) {
-      if (err) { return next(err); }
-  
-      res.json({ message: 'playlist added!' });
-    });
+    
+    Party.findOne({_id: req.body.partyId}, (err, data) => {
+      if (err) throw err;
+      if (data) {
+        data.playlists.push(`${req.body.playlistId}`);
+        data.save((err, saveData) => {
+          if (err) throw err;
+        });
+      } else {
+        var party = new Party();
+        party.playlists = [`${req.body.playlistId}`];  // set the bears name (comes from the request)
+        party.partyId = req.body.partyId;  // set the bears name (comes from the request)
+        party.userEmail = req.body.userEmail;  // set the bears name (comes from the request)
+        party.save(function (err) {
+          if (err) { return next(err); }
+      
+          res.json({ message: 'playlist added!' });
+        });
+      }
+    })
   });
 
 // Start her up, boys

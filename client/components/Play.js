@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { createPlaylist } from '../actions/actions';
 import { connect } from 'react-redux';
 import {
     getMyInfo,
@@ -13,7 +14,7 @@ import {
 class User extends Component {
     constructor(props) {
         super(props);
-        this.state = { playlists: [],playlistId:'' }
+        this.state = { playlists: [], partyId: '', tracks: [] }
         //this.selectPlaylist = this.selectPlaylist.bind(this);
     }
     /** When we mount, get the tokens from react-router and initiate loading the info */
@@ -23,35 +24,81 @@ class User extends Component {
         const { accessToken, refreshToken } = params;
         dispatch(setTokens({ accessToken, refreshToken }));
         dispatch(getMyInfo());
-        console.log('aaaaaaaaaaaaaaaaa', this.props);
-
-
     }
 
     componentWillMount() {
+        console.log("STATE");
+        const accessToken = this.props.location.state.accessToken;
+        var run = false;
         this.setState({
-            playlistId: this.props.location.state.playlistId
-          });
-        axios.get(
-            `https://api.spotify.com/v1/playlists/${this.props.location.state.playlistId}/tracks`,
-            {
-                headers: {
-                    "Authorization": `Bearer ${this.props.location.state.accessToken}`
-                }
+            partyId: this.props.location.state.party_id,
+        });
+        var promises = [];
+        axios.get(`http://localhost:3000/getPlaylists/${this.props.location.state.party_id}`).then((response) => {
+             
+            var playlists = response.data[0].playlists;
+            var trackSet = [];
+            var playlistCollection = [];
+            for (var i = 0; i < playlists.length; i++) {
+                console.log(i, playlists.length);
+                promises.push(axios.get(`https://api.spotify.com/v1/playlists/${playlists[i]}/tracks`,
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${accessToken}`
+                        }
+                    }
+                ).then((track) => {
+                    for (var i = 0; i < track.data.items.length; i++) {
+                        if (i < 50) {
+                            trackSet.push(track.data.items[i].track.uri);
+                        }
+                    }
+                }).catch((error) => {throw error}));
+                axios.all(promises).then(() => {
+                        
+                        /*for (var j = 0; j < trackSet.length; j++) {
+                            var count = 0;
+                            for (var k = 0; k < trackSet.length; k++) {
+                                if (j === k) {
+                                    continue;
+                                }
+                                if (trackSet[j] === trackSet[k]) {
+                                    count++;
+                                }
+                            }
+                            if (count > 0) {
+                                trackSet.slice(indexOf(trackSet[j]),1); 
+                            }
+                        }*/
+
+                        console.log("THIS > STATE > TRACKS");
+                        console.log(trackSet);
+
+                        if (!run) {
+                            run = true;
+                            console.log("MAKING A PLAYLIST");
+                            console.log(accessToken);
+                            axios.post(`https://api.spotify.com/v1/users/${this.props.user.id}/playlists`, {
+                                name: `Temporary GroupMusic Template ${this.state.partyId}`,
+                            }, { headers: {
+                                "Authorization": `Bearer ${accessToken}`,
+                                "Content-Type": "application/json",
+                                }},).then((response) => {
+                                    axios.post(`https://api.spotify.com/v1/playlists/${response.data.id}/tracks`, {
+                                        uris: trackSet,
+                                    },{ headers: {
+                                        "Authorization": `Bearer ${accessToken}`,
+                                        "Content-Type": "application/json",
+                                        }}).then((response) => {});
+                                
+                            }).catch((error) => {throw error});
+                            //createPlaylist({"name": "Temporary GroupMusic Template"});
+                        }
+                    }
+                );
             }
-        )
-            .then((response) => {
-                var response = response.data;
-                console.log('----------TRRRRAAACKS----', response.items);
-                this.setState({ tracks: response.items.track });
-
-            },
-                (error) => {
-                    var status = error.response.status
-                }
-            );
+        });
     }
-
 
     /** Render the user's info */
     render() {

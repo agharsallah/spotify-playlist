@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const Party = require('./model/party');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://test:hackthenorth18@ds257732.mlab.com:57732/spotify-playlist'); // connect to database
+mongoose.connect('mongodb://admin:admin123@ds139919.mlab.com:39919/spotify-playlist'); // connect to database
 
 // configure the express server
 const CLIENT_ID = '058622cd5fbc48f0be5988bc66af696f';
@@ -17,7 +17,7 @@ const CLIENT_SECRET = 'a046be5c2f884bd58d99f25bffd1db17';
 const REDIRECT_URI = 'http://localhost:3000/callback';
 const STATE_KEY = 'spotify_auth_state';
 // your application requests authorization
-const scopes = ['user-read-private', 'user-read-email', 'playlist-read-private'];
+const scopes = ['user-read-private', 'user-read-email', 'playlist-read-private', 'playlist-modify-public', 'playlist-modify-private'];
 
 // configure spotify
 const spotifyApi = new Spotify({
@@ -42,12 +42,27 @@ router.get('/login', (_, res) => {
 
 router.get('/parties/:userId', function(req, res, next) {
   Party.find({members: req.params.userId}, (err, partyDocs) => {
-    console.log(req.params.userId);
+    
     res.json(partyDocs);
   });
 });
 
+router.post('/createParty', (req, res, next) => {
+  var party = new Party();
+  party.members = [req.body.email];
+  party.name = "Test Party";
+  party.save((err, result) => {
+    console.log("new party");
+  });
+})
 
+router.get('/getPlaylists/:partyId', (req, res, next) => {
+  Party.find({_id: req.params.partyId}, (err, data) => {
+    
+    res.json(data);
+  });
+
+})
 
 /**
  * The /callback endpoint - hit after the user logs in to spotifyApi
@@ -76,8 +91,6 @@ router.get('/callback', (req, res) => {
       spotifyApi.getMe().then(({ body }) => {
         console.log(body);
       });
-
-
 
       // we can also pass the token to the browser to make requests from there
       res.redirect(`/#/user/${access_token}/${refresh_token}`);
