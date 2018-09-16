@@ -114,7 +114,7 @@ class User extends Component {
             {this.state.playlists.map(function (object, i) {
               console.log(object);
               return (<div onClick={() => this.selectPlaylist(object.id, user.email, accessToken)} key={i}>
-                <img src={object.images[0].url}></img>
+                {/* <img src={object.images[0].url}></img> */}
                 <p>{object.name}</p>
               </div>)
             }, this)}

@@ -6,6 +6,7 @@ const partySchema = new Schema({
     members: {type: [String], require: true},
     playlistId: {type: String, require: false},
     playlists: {type: [String], require: false},
+    matchedTracks: {type: [String], require: false},
 });
 
 

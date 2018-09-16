@@ -27,10 +27,6 @@ class Party extends Component {
 
   }
 
-  componentWillMount() {
-
-  }
-
   componentWillReceiveProps(nextProps) {
     
     //console.log(this.props);
@@ -41,7 +37,7 @@ class Party extends Component {
         }
       )
         .then((response) => {
-          var response = response.data;
+          var response = response.data; 
           this.setState({ parties: response });
         },
           (error) => {

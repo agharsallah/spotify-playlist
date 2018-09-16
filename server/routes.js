@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const Party = require('./model/party');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin:admin123@ds139919.mlab.com:39919/spotify-playlist'); // connect to database
+mongoose.connect('mongodb://test:hackthenorth18@ds257732.mlab.com:57732/spotify-playlist'); // connect to database
 
 // configure the express server
 const CLIENT_ID = '058622cd5fbc48f0be5988bc66af696f';
@@ -63,6 +63,8 @@ router.get('/getPlaylists/:partyId', (req, res, next) => {
   });
 
 })
+
+
 
 /**
  * The /callback endpoint - hit after the user logs in to spotifyApi
